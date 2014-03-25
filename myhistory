@@ -1,0 +1,236 @@
+    1  yum update
+    2  kill %1
+    3  jobs
+    4  kill %1
+    5  kill -HUP %1
+    6  jobs
+    7  killall yum
+    8  fg
+    9  bg
+   10  jobs
+   11  killall yum
+   12  killall -9 yum
+   13  yum update
+   14  yum remove matahari*
+   15  yum update
+   16  mkdir /sapmedia
+   17  vim /etc/fstab 
+   18  mount -a
+   19  cd /sapmedia/
+   20  ls
+   21  ping redhat.com
+   22  to
+   23  top
+   24  cd /var/log/
+   25  ls
+   26  cat messages 
+   27  cd /var/log/
+   28  ls
+   29  cd ..
+   30  cd cache/
+   31  find | grep rpm
+   32  cd yum/
+   33  ls
+   34  find | less
+   35  cd x86_64/
+   36  ls
+   37  cd 6Server/
+   38  ls
+   39  cd rh
+   40  cd rhel-x86_64-server-6/
+   41  ls
+   42  cd ..
+   43  ls
+   44  cp -a rhel-x86_64-server-6/ /root/
+   45  cd
+   46  du -hs rhel-x86_64-server-6/
+   47  ls /dev/sr*
+   48  mount /dev/sr0 /media/
+   49  cd /media/
+   50  ls
+   51  cd /tmp/
+   52  yum install gcc kernel-devel
+   53  ls
+   54  tar xvf /media/VMwareTools-9.0.5-1065307.tar.gz 
+   55  ls
+   56  cd vmware-tools-distrib/
+   57  ls
+   58  cd bin/
+   59  cd ..
+   60  ./vmware-install.pl 
+   61  cat /var/spool/mail/r
+   62  cat /var/spool/mail/root 
+   63  ls /boot/
+   64  vmware-config-tools.pl -k 2.6.32-431.5.1.el6.x86_64
+   65  ls /boot/
+   66  dracut -f /boot/initramfs-2.6.32-431.5.1.el6.x86_64.img 2.6.32-431.5.1.el6.x86_64.img
+   67  depmod -a
+   68  dracut -f /boot/initramfs-2.6.32-431.5.1.el6.x86_64.img 2.6.32-431.5.1.el6.x86_64
+   69  reboot
+   70  halt
+   71  du -hs rhel-x86_64-server-6/
+   72  ls rhel-x86_64-server-6/
+   73  cd pack
+   74  ls
+   75  cd rhel-x86_64-server-6/
+   76  ls
+   77  cd packages/
+   78  ls
+   79  ssh vini@archdiogo
+   80  cd ..
+   81  ls
+   82  rsync -avz packages/ root@archdiogo:/var/repo/
+   83  cd ..
+   84  ls
+   85  cd ...
+   86  cd
+   87  ls
+   88  rm -rf rhel-x86_64-server-6/
+   89  vim /etc/fstab 
+   90  mount -a
+   91  free -m
+   92  cat /etc/fstab 
+   93  swapon -s
+   94  swapon /dev/mapper/vg_swap-lv_swap 
+   95  free -m
+   96  swapoff /dev/mapper/vg_swap-lv_swap 
+   97  mount -a
+   98  swapon -s
+   99  man mount
+  100  swapon -h
+  101  swapon -a
+  102  free -m
+  103  pvcreate /dev/sdc 
+  104* vgcreate v/dev/sdc 
+  105  pvs
+  106  vgcreate vg_sap /dev/sdc 
+  107  lvcreate vg_sap -n lv_sapmnt -L 1024M 
+  108  lvs
+  109  mkfs.ext4 /dev/vg_sap/lv_sapmnt
+  110  lvs
+  111  vim /etc/fstab 
+  112  mount -a
+  113  mkdir /sapmnt
+  114  mount -a
+  115  mount
+  116  mount | grep sapm
+  117  df /sapmnt/
+  118  df -h
+  119  cat /etc/fstab 
+  120  lvcreate vg_sap -n lv_sap-ecq -L 1024M 
+  121  man lvcreate
+  122  vls
+  123  lvs
+  124  vim /etc/fstab 
+  125  lvs
+  126  vim /etc/fstab 
+  127  mkdir /sapmnt/ECQ
+  128  mount -a
+  129  mkfs.ext3 /dev/mapper/vg_sap-lv_sap--ecq 
+  130  mount -a
+  131  df /sapmnt/ECQ/
+  132  lvcreate vg_sap -n lv_sap-usr-ecq -L 1024M 
+  133  lvcreate vg_sap -n lv_sap-daa -L 5120M 
+  134  vls
+  135  lvs
+  136  lvextend 
+  137  lvextend --help
+  138  lvextend vg_sap/lv_sap-ecq -L 10240M
+  139  lvextend vg_sap/lv_sap-usr-ecq -L 10240M
+  140  mount
+  141  touch /sapmnt/ECQ/dados
+  142  echo 1 > /sapmnt/ECQ/dados 
+  143  resize2fs /dev/mapper/vg_sap-lv_sap--ecq 
+  144  mount
+  145  df -h
+  146  vim /etc/fstab 
+  147  lvs
+  148  rm /sapmnt/ECQ/dados 
+  149  cat /sapmnt/ECQ/dados 
+  150  rm /sapmnt/ECQ/dados 
+  151  lvs
+  152  lvs vg_sap
+  153  vim /etc/fstab 
+  154  mount -a
+  155  mkdir /usr/sap
+  156  mount -a
+  157  vim /etc/fstab 
+  158  mount -a
+  159  mkdir /usr/sap/ECQ
+  160  mount -a
+  161  mkfs.ext4 /dev/mapper/vg_sap-lv_sap--usr--ecq 
+  162  mount -a
+  163  cat /etc/fstab 
+  164  lvcreate vg_sap -n lv_usr-sap -L 1024M
+  165  mkfs.ext4 /dev/vg_sap/lv_usr-sap 
+  166  man mkfs.ext4
+  167  cat /etc/fstab 
+  168  lvs
+  169  lvs vg_sap
+  170   lvcreate vg_sap -n lv_usr-sap-trans -L 30g && mkfs.ext4 /dev/mapper/vg_sap-lv_usr-sap-trans 
+  171  mkfs.ext4 /dev/mapper/vg_sap-lv_usr--sap--trans 
+  172  lvs vg_sap
+  173  vim /etc/fstab 
+  174  mount -a
+  175  mkdir /usr/sap/DAA
+  176  mkdir /usr/sap/trans
+  177  mount -a
+  178  lvrename vg_sap/lv_sap-daa lv_sap_daa
+  179  mount -a
+  180  mkfs.ext4 /dev/mapper/vg_sap-lv_sap_daa 
+  181  mount -a
+  182  lvs
+  183  lvs vg_sap
+  184  mount
+  185  ls /dev/sd*
+  186  pvs
+  187  pvcreate /dev/sdd
+  188  vgcreate vg_db2 /dev/sdd 
+  189  vim /etc/fstab 
+  190  cat /etc/fstab 
+  191  vim create_lvs_db2.bash
+  192  cat create_lvs_db2.bash 
+  193  lvcreate vg_db2 -n lv_db2-ecq -L 1024M && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq
+  194  cat create_lvs_db2.bash 
+  195  lvcreate vg_db2 -n lv_db2-ecq-db2dump -L 5120M && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq-db2dump
+  196  lvcreate vg_db2 -n lv_db2-ecq-log_archive -L 10240M && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq-log_archive
+  197  lvcreate vg_db2 -n lv_db2-ecq-log_dir -L 10240M && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq-log_dir
+  198  lvcreate vg_db2 -n lv_db2-ecq-sapdata1 -L 384g && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--sapdata1
+  199  lvcreate vg_db2 -n lv_db2-ecq-sapdata2 -L 384g && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--sapdata2
+  200  lvcreate vg_db2 -n lv_db2-ecq-sapdata3 -L 384g && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--sapdata3
+  201  lvcreate vg_db2 -n lv_db2-ecq-sapdata4 -L 384g && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--sapdata4
+  202  lvcreate vg_db2 -n lv_db2-db2ecq -L 5g && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--db2ecq
+  203  ls
+  204  vim create_lvs_db2.bash 
+  205  cat create_lvs_db2.bash 
+  206  lvcreate vg_db2 -n lv_db2-ecq-db2dump -L 5120M && mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--db2dump
+  207  mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--db2dump
+  208  mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--log_archive
+  209  mkfs.ext4 /dev/mapper/vg_db2-lv_db2--ecq--log_dir
+  210  mount -a
+  211  echo mkdir -p /db2/ECQ/sapdata{1,2,3,4}
+  212  mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4
+  213  echo mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4 >> create_lvs_db2.bash 
+  214  vim create_lvs_db2.bash 
+  215  cat create_lvs_db2.bash 
+  216  mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4
+  217  mkdir -p /db2/ECQ /db2/ECQ/db2dump /db2/ECQ/log_archive /db2/ECQ/log_dir 
+  218  mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4 
+  219  mkdir -p /db2/db2ecq 
+  220  mount -a
+  221  mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4
+  222  mkdir -p /db2/ECQ /db2/ECQ/db2dump /db2/ECQ/log_archive /db2/ECQ/log_dir 
+  223  mkdir -p /db2/ECQ/sapdata1 /db2/ECQ/sapdata2 /db2/ECQ/sapdata3 /db2/ECQ/sapdata4 
+  224  mkdir -p /db2/db2ecq 
+  225  mount -a
+  226  df 
+  227  df -h
+  228  lvs
+  229  df
+  230  df -h
+  231  ls
+  232  cd
+  233  scp create_lvs_db2.bash vini@archdiogo:scripts/
+  234  cat .bash_history 
+  235  history 
+  236  history > myhistory
