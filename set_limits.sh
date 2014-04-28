@@ -1,4 +1,9 @@
 
+grep -q '@sapsys' /etc/security/limits.conf && {
+  echo 'Limits seem to be in place. Skipping.'
+  exit 0
+}
+
 tmp_file=`mktemp`
 
 grep -v '^# End of file' /etc/security/limits.conf > $tmp_file

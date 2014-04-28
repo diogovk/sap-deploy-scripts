@@ -1,3 +1,6 @@
+subscription-manager register
 
-yum install uuid
+subscription-manager attach --pool 8a85f98244800ff201451ee9a392212b
+
+yum -y install uuid ksh
 
