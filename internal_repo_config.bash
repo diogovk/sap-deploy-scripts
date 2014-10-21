@@ -10,9 +10,11 @@ name=Red Hat Linux $releasever - $basearch - For Malwee
 baseurl=http://srvspsld01/
 EOF
 
+
 sed -i s/^keepcache=0/keepcache=1/ /etc/yum.conf 
 # We use subscription manager instead of RHN
 yum -y remove yum-rhn-plugin
 
+subscription-manager release --set=6.5
 yum clean all
 
