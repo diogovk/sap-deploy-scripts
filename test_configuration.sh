@@ -91,7 +91,7 @@ grep -q 'nameserver *172.16.3.104' /etc/resolv.conf && grep 'search *malwee.com.
   echo 'ERRO: Problema na configuração de DNS'
 }
 
-grep -q /usr/sap/trans' .*nfs' /etc/fstab || grep '^/usr/sap/trans' /etc/exports  || {
+grep -q /usr/sap/trans'[ 	].*nfs' /etc/fstab || grep '^/usr/sap/trans' /etc/exports  || {
   echo 'ATENCAO: /usr/sap/trans deve ser exportado ou montado via NFS'
 }
 
@@ -99,6 +99,10 @@ grep -q 'id:3:initdefault:' /etc/inittab || {
   echo 'ERRO: /etc/inittab deve estar como 3'
 }
 
+
+/usr/sap/hostctrl/exe/saphostexec -version | grep -q '^patch number.*190' || {
+  echo 'ERRO: Patch number não está 190'
+}
 
 echo '#############
 

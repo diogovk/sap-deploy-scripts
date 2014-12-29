@@ -1,4 +1,5 @@
 
+# habilita NTP no boot
 chkconfig ntpd on
 
 echo "adicione:

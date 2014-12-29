@@ -49,4 +49,20 @@ rpm -q lgtoclnt-8.1.1.2-1.x86_64 && {
   echo ERRO: lgtoclnt-8.1.1.2-1.x86_64 é conhecido por causar problemas junto ao DDBoost.
   RET=7
 } 
+grep '(MAX_LOG) = 80' $tmpfile || {
+  echo ERRO: Configuração de MAX_LOG esta errada
+  RET=2
+}
+grep '(NUM_LOG_SPAN) = 110' $tmpfile || {
+  echo ATENCAO: Revisar configuração NUM_LOG_SPAN. 'Recomendado metade do valor de LOGPRIMARY'
+  RET=2
+}
+grep '(LOGFILSIZ) = 27500' $tmpfile || {
+  echo ATENCAO: Revisar configuração de LOGFILSIZ. 'Ex: LOGFILSIZ = 27500'
+  RET=2
+}
+grep '(LOGPRIMARY) = 220' $tmpfile || {
+  echo ATENCAO: Revisar configuração de LOGPRIMARY 'Ex: LOGPRIMARY = 220'
+  RET=2
+}
 exit $RET

@@ -13,11 +13,14 @@ rpm -q emcddbda || {
 }
 
 rpm -q lgtoclnt-8.1.1.2-1.x86_64 && {
+  # o agente do Networker estava causando problemas na arquivamento de logs do DB2
+  # Depois de instalar o agente mais antigo o erro parou de acontecer
   echo lgtoclnt-8.1.1.2-1.x86_64 é conhecido por causar problemas junto ao DDBoost.
   ask_sure
 }
 
 reinstall_lgtoclnt() {
+    # apaga o agente networker e instala a versão 7.6 a partir de repositorio (interno)
   yum remove lgtoclnt -y
   rm -rf /nsr/
   yum install -y lgtoclnt-7.6.5-1.x86_64
@@ -27,11 +30,14 @@ reinstall_lgtoclnt() {
 
 set -e
 
+# DEVICE_HOST define em qual dos servidores datadomain o DDBoost vai salvar o backup/logs
+# O ideal é que fique no datacenter contrario a onde está o servidor.
 grep '^DEVICE_HOST *=' /opt/ddbda/config/db2_ddbda.cfg && {
   echo Host está correto?
   ask_sure
 }
 
+# nome da instancia (ex: ECP)
 echo Digite o nome da instancia:
 read INSTNAME
 
@@ -42,8 +48,9 @@ DB2USER="$(cat /etc/passwd | grep ^db2 | head -1 |cut -f 1 -d:)"
 }
 
 
+# Os dois comandos abaixo são apenas para máquinas que não utilizam HADR
+# 
 /opt/ddbda/bin/ddbmadmin -U || true
-
 /opt/ddbda/bin/ddbmadmin -P -z /opt/ddbda/config/db2_ddbda.cfg
 
 su - $DB2USER -c "db2 update db cfg for $INSTNAME  using VENDOROPT @/opt/ddbda/config/db2_ddbda.cfg"  || true
