@@ -1,8 +1,10 @@
 
-sidadm=poqadm
-db2sid=db2poq
+sidadm=ecqadm
+db2sid=db2ecq
 DB2INSTALLER=/tmp/DB2_LUW_10.5_FP5_RDBMS_LINUX_/LINUXX86_64
-SID=POQ
+SID=ECQ
+
+# rsync -avz /sapmedia/IBM_DB2/DB2_LUW_10.5_FP5_RDBMS_LINUX_ /tmp/
 
 set -e
 
@@ -37,9 +39,9 @@ su - $db2sid
 startdb
 exit
 
-su - db2poq -c "cd $DB2INSTALLER ; ./db6_update_db.sh -d $SID"
+su - $db2sid -c "cd $DB2INSTALLER ; ./db6_update_db.sh -d $SID"
 
-su - db2poq -c "cd $DB2INSTALLER ; db2 -z db6_update_db_out.log -tvf db6_update_db_out.sql ; "
+su - $db2sid -c "cd $DB2INSTALLER ; db2 -z db6_update_db_out.log -tvf db6_update_db_out.sql ; "
 
 su - $sidadm
 startsap all
