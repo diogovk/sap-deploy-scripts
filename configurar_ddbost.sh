@@ -53,9 +53,11 @@ DB2USER="$(cat /etc/passwd | grep ^db2 | head -1 |cut -f 1 -d:)"
 /opt/ddbda/bin/ddbmadmin -U || true
 /opt/ddbda/bin/ddbmadmin -P -z /opt/ddbda/config/db2_ddbda.cfg
 
+[ ! -e /db2/boostcfg ] && ln -s /opt/ddbda/config /db2/boostcfg
+
 su - $DB2USER -c "db2 update db cfg for $INSTNAME  using VENDOROPT @/opt/ddbda/config/db2_ddbda.cfg"  || true
 
-su - $DB2USER -c "db2 update db cfg for $INSTNAME using LOGARCHMETH1 VENDOR:/usr/lib/ddbda/lib64/libddboostdb2.so LOGARCHOPT1 @/opt/ddbda/config/db2_ddbda.cfg" || true
+su - $DB2USER -c "db2 update db cfg for $INSTNAME using LOGARCHMETH1 VENDOR:/usr/lib/ddbda/lib64/libddboostdb2.so LOGARCHOPT1 @/db2/boostcfg/db2_ddbda.cfg" || true
 
 su - $DB2USER -c "db2 update db cfg for $INSTNAME using LOGARCHCOMPR1 OFF" || true
 
