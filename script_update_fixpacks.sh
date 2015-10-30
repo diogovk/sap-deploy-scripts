@@ -29,7 +29,7 @@ cd $DB2INSTALLER/ESE/disk1/
 # responda DB2DIR ; no
 ./installFixPack -f db2lib
 
-
+# If you get DBI1086E, verify that there are no broken links in the /db2/db2smn/db2_software/adm
 /db2/$db2sid/db2_software/instance/db2iupdt $db2sid
 cd $DB2INSTALLER/
 
