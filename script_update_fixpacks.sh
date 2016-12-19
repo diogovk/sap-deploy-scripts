@@ -1,27 +1,21 @@
 
-sidadm=ecqadm
-db2sid=db2ecq
-DB2INSTALLER=/tmp/DB2_LUW_10.5_FP5_RDBMS_LINUX_/LINUXX86_64
-SID=ECQ
+sidadm=podadm
+db2sid=db2pod
+DB2INSTALLER=/tmp/DB2_LUW_10.5_FP7SAP_RDBMS_LINUX_/LINUXX86_64
+SID=POD
 
-# rsync -avz /sapmedia/IBM_DB2/DB2_LUW_10.5_FP5_RDBMS_LINUX_ /tmp/
+# rsync -avz /sapmedia/IBM_DB2/DB2_LUW_10.5_FP7SAP_RDBMS_LINUX_ /tmp/
 
 set -e
 
-su - $sidadm
-stopsap all
-exit
+su - $sidadm -c 'stopsap all'
 
 tar -jcvf /backup/$db2sid.tar.bz2 /db2/$db2sid
 
-
-
-su - $db2sid
-$DB2DIR/bin/ipclean
-$DB2DIR/das/bin/db2admin stop
-
-db2ls
-exit
+su - $db2sid -c '
+$DB2DIR/bin/ipclean;
+$DB2DIR/das/bin/db2admin stop ;
+db2ls '
 
 
 cd $DB2INSTALLER/ESE/disk1/
@@ -35,15 +29,11 @@ cd $DB2INSTALLER/
 
 chmod a+rwx -R .
 
-su - $db2sid
-startdb
-exit
+su - $db2sid -c startdb || true
 
 su - $db2sid -c "cd $DB2INSTALLER ; ./db6_update_db.sh -d $SID"
 
-su - $db2sid -c "cd $DB2INSTALLER ; db2 -z db6_update_db_out.log -tvf db6_update_db_out.sql ; "
+su - $db2sid -c "cd $DB2INSTALLER ; db2 -z db6_update_db_out.log -tvf db6_update_db_out.sql ; " || true
 
-su - $sidadm
-startsap all
-exit
+su - $sidadm -c "startsap all"
 
